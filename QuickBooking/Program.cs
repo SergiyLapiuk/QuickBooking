@@ -15,14 +15,16 @@ builder.Services.AddDbContext<QuickBookingDbContext>(options =>
 
 var app = builder.Build();
 
-var port = Environment.GetEnvironmentVariable("PORT") ?? "5000";
-app.Urls.Add($"http://*:{port}");
+
 
 
 app.UseSwagger();
 app.UseSwaggerUI();
 
-app.UseHttpsRedirection();
+if (app.Environment.IsDevelopment())
+{
+    app.UseHttpsRedirection(); // Використовується тільки в середовищі розробки
+}
 
 app.UseAuthorization();
 
